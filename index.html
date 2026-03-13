@@ -1,154 +1,1398 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Correu Electrònic - Components i Protocols</title>
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.6;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    h1, h2, h3 {
-      color: #2c3e50;
-    }
-    h1 {
-      text-align: center;
-      border-bottom: 2px solid #3498db;
-      padding-bottom: 10px;
-    }
-    section {
-      margin-bottom: 40px;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .component {
-      margin-bottom: 30px;
-    }
-    ul {
-      padding-left: 25px;
-    }
-    .highlight {
-      background-color: #e8f4fd;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-    code {
-      background: #eee;
-      padding: 2px 5px;
-      border-radius: 4px;
-      font-family: Consolas, monospace;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentació Apache - L'Aiguamoll de Shrek 🐊</title>
+   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Cabin:wght@400;600;700&display=swap" rel="stylesheet">
+   
+    <style>
+        :root {
+            --swamp-dark: #2d4a2b;
+            --swamp-green: #4a7c59;
+            --swamp-light: #6b9b7f;
+            --mud-brown: #5c4033;
+            --moss-green: #8fbc8f;
+            --water-murky: #4a6b5c;
+            --shrek-green: #6b8e23;
+            --text-light: #f4f1de;
+            --text-dark: #2d3b2d;
+            --accent-orange: #d4a574;
+        }
+       
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+       
+        body {
+            font-family: 'Cabin', sans-serif;
+            background: linear-gradient(180deg, #3d5a3d 0%, #2d4a2b 50%, #1a2f1a 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+       
+        /* Swamp texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(107, 142, 35, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(74, 124, 89, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(92, 64, 51, 0.15) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: 1;
+        }
+       
+        /* Floating swamp particles */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+       
+        .swamp-particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, rgba(143, 188, 143, 0.4), transparent);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 2;
+        }
+       
+        /* Header with Shrek theme */
+        header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            background: linear-gradient(180deg, rgba(74, 124, 89, 0.3) 0%, transparent 100%);
+            border-bottom: 4px solid var(--mud-brown);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+       
+        h1 {
+            font-family: 'Creepster', cursive;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            color: var(--shrek-green);
+            text-shadow:
+                3px 3px 0 var(--mud-brown),
+                -1px -1px 0 rgba(0, 0, 0, 0.5),
+                4px 4px 10px rgba(0, 0, 0, 0.6);
+            margin-bottom: 1rem;
+            letter-spacing: 0.02em;
+            animation: sway 3s ease-in-out infinite;
+        }
+       
+        @keyframes sway {
+            0%, 100% { transform: rotate(-1deg); }
+            50% { transform: rotate(1deg); }
+        }
+       
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--moss-green);
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin-bottom: 2rem;
+        }
+       
+        /* Language Switcher - Styled like swamp signs */
+        .language-switcher {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 600px;
+        }
+       
+        .lang-btn {
+            background: linear-gradient(135deg, var(--mud-brown) 0%, #3d2817 100%);
+            color: var(--text-light);
+            border: 3px solid var(--swamp-dark);
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow:
+                0 4px 8px rgba(0, 0, 0, 0.4),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+            font-family: 'Cabin', sans-serif;
+        }
+       
+        .lang-btn::before {
+            content: '🌿';
+            position: absolute;
+            left: 0.3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+       
+        .lang-btn:hover {
+            background: linear-gradient(135deg, var(--shrek-green) 0%, var(--swamp-green) 100%);
+            transform: translateY(-3px) rotate(-2deg);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+        }
+       
+        .lang-btn.active {
+            background: linear-gradient(135deg, var(--shrek-green) 0%, var(--moss-green) 100%);
+            border-color: var(--accent-orange);
+            box-shadow:
+                0 6px 16px rgba(107, 142, 35, 0.6),
+                inset 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+       
+        /* Main Container - Swamp clearing */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+       
+        /* Content sections - Like wooden planks in the swamp */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+       
+        .content-section.active {
+            display: block;
+        }
+       
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+       
+        /* Document cards - Like moss-covered logs */
+        .document {
+            background: linear-gradient(135deg,
+                rgba(74, 124, 89, 0.4) 0%,
+                rgba(45, 74, 43, 0.6) 100%);
+            border: 4px solid var(--mud-brown);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                inset 0 2px 10px rgba(143, 188, 143, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+       
+        .document::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 10px,
+                rgba(92, 64, 51, 0.1) 10px,
+                rgba(92, 64, 51, 0.1) 11px
+            );
+            pointer-events: none;
+        }
+       
+        .document h2 {
+            font-family: 'Creepster', cursive;
+            font-size: 2.5rem;
+            color: var(--accent-orange);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            position: relative;
+            padding-left: 3rem;
+        }
+       
+        .document h2::before {
+            content: '🐸';
+            position: absolute;
+            left: 0;
+            font-size: 2rem;
+        }
+       
+        .document h3 {
+            font-size: 1.8rem;
+            color: var(--moss-green);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+            border-left: 6px solid var(--shrek-green);
+            padding-left: 1rem;
+            position: relative;
+        }
+       
+        .document h4 {
+            font-size: 1.3rem;
+            color: var(--accent-orange);
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+       
+        .document p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+       
+        .document ul, .document ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+       
+        .document li {
+            margin-bottom: 0.8rem;
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+       
+        /* Code blocks - Like carved wood */
+        .code-block {
+            background: linear-gradient(135deg, #2d3b2d 0%, #1a2f1a 100%);
+            border: 3px solid var(--mud-brown);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.6);
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: var(--moss-green);
+            position: relative;
+        }
+       
+        .code-block::before {
+            content: '💻';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 1.5rem;
+            opacity: 0.5;
+        }
+       
+        /* Command examples */
+        .command {
+            background: rgba(107, 142, 35, 0.2);
+            border-left: 4px solid var(--shrek-green);
+            padding: 0.8rem 1.2rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            color: var(--moss-green);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+       
+        /* Warning/Important boxes */
+        .warning {
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.2) 0%, rgba(184, 134, 11, 0.2) 100%);
+            border: 3px solid var(--accent-orange);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+        }
+       
+        .warning h4 {
+            color: var(--accent-orange);
+            margin-top: 0;
+        }
+       
+        /* Task boxes */
+        .task {
+            background: rgba(74, 124, 89, 0.3);
+            border: 3px dashed var(--moss-green);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+       
+        .task-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-bottom: 1rem;
+        }
+       
+        /* Configuration examples */
+        .config-example {
+            background: linear-gradient(135deg, rgba(45, 59, 45, 0.8) 0%, rgba(26, 47, 26, 0.9) 100%);
+            border: 2px solid var(--shrek-green);
+            border-radius: 10px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+       
+        /* Network config table */
+        .network-config {
+            background: rgba(74, 124, 89, 0.2);
+            border: 2px solid var(--swamp-green);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+       
+        .network-config dt {
+            color: var(--accent-orange);
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+       
+        .network-config dd {
+            color: var(--moss-green);
+            margin-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+       
+        /* Footer - Swamp bottom */
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            background: linear-gradient(180deg, transparent 0%, rgba(45, 74, 43, 0.6) 100%);
+            border-top: 4px solid var(--mud-brown);
+            font-size: 0.95rem;
+            color: var(--moss-green);
+        }
+       
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+       
+        .swamp-emoji {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+       
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+           
+            .document {
+                padding: 1.5rem;
+            }
+           
+            .document h2 {
+                font-size: 2rem;
+            }
+           
+            .language-switcher {
+                gap: 0.5rem;
+            }
+           
+            .lang-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+       
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+       
+        /* Selection color */
+        ::selection {
+            background: var(--shrek-green);
+            color: var(--text-light);
+        }
+    </style>
 </head>
 <body>
+    <!-- Floating swamp particles -->
+    <div class="swamp-particle" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+    <div class="swamp-particle" style="left: 85%; top: 40%; animation-delay: 2s;"></div>
+    <div class="swamp-particle" style="left: 30%; top: 60%; animation-delay: 4s;"></div>
+    <div class="swamp-particle" style="left: 70%; top: 80%; animation-delay: 6s;"></div>
+    <div class="swamp-particle" style="left: 50%; top: 15%; animation-delay: 1s;"></div>
+    <div class="swamp-particle" style="left: 20%; top: 70%; animation-delay: 3s;"></div>
+    <div class="swamp-particle" style="left: 90%; top: 25%; animation-delay: 5s;"></div>
+    <div class="swamp-particle" style="left: 40%; top: 90%; animation-delay: 7s;"></div>
 
-  <h1>Sistema de Correu Electrònic</h1>
-  <p style="text-align:center; color:#555;">Components principals, protocols i opcions de configuració</p>
+    <header>
+        <h1>🧅 L'Aiguamoll de Shrek 🐊</h1>
+        <p class="subtitle">Documentació de Configuració Apache & Autenticació Web</p>
+       
+        <div class="language-switcher">
+            <button class="lang-btn active" onclick="switchLanguage('ca')">Català</button>
+            <button class="lang-btn" onclick="switchLanguage('es')">Español</button>
+            <button class="lang-btn" onclick="switchLanguage('zh')">中文</button>
+            <button class="lang-btn" onclick="switchLanguage('tr')">Türkçe</button>
+        </div>
+    </header>
 
-  <section>
-    <h2>1. MUA (Mail User Agent)</h2>
-    <p>És l'agent amb què interactua l'usuari final. És el client de correu; no mou correu entre servidors, només envia al MTA i rep de la bústia (MDA).</p>
-    
-    <p><strong>Tasques:</strong></p>
-    <ul>
-      <li>Redactar i enviar correus.</li>
-      <li>Llegir, organitzar i filtrar missatges.</li>
-      <li>Accedir a la bústia remota mitjançant IMAP o POP3.</li>
-    </ul>
+    <div class="container">
+        <!-- CATALAN CONTENT -->
+        <div id="content-ca" class="content-section active">
+            <div class="document">
+                <h2>📚 Pràctica 1: Configuració del Servidor Web Apache</h2>
+               
+                <div class="warning">
+                    <h4>🎯 Objectiu de la Pràctica</h4>
+                    <p>L'empresa Advocats Pedralbes S.L. necessita instal·lar un servidor WEB per albergar diferents llocs web. Aquesta pràctica cobreix la configuració completa d'Apache amb Virtual Hosts.</p>
+                </div>
 
-    <p><strong>Exemples:</strong></p>
-    <ul>
-      <li>Aplicacions d'escriptori: Thunderbird, Outlook.</li>
-      <li>Aplicacions web: Gmail Web, Outlook Web.</li>
-      <li>Aplicacions mòbils: iOS Mail, Gmail app.</li>
-    </ul>
-  </section>
+                <h3>Tasca 1: Configuració del Hostname</h3>
+                <p>Configurar el hostname de la màquina amb el vostre nom i primera lletra del cognom.</p>
+                <div class="command">sudo hostnamectl set-hostname gabrielm</div>
+                <div class="command">hostname</div>
+                <p><strong>Resultat:</strong> El sistema mostrarà el nou hostname "gabrielm"</p>
 
-  <section>
-    <h2>2. MTA (Mail Transfer Agent)</h2>
-    <p>És un programa que corre en el servidor, encarregat de transmetre correu entre servidors. És el «carter» del sistema de correu.</p>
-    
-    <p><strong>Tasques:</strong></p>
-    <ul>
-      <li>Rebre missatges d'un MUA (SMTP).</li>
-      <li>Enviar missatges a uns altres MTA segons el destí (SMTP).</li>
-      <li>Col·locar missatges en la cua de lliurament si el servidor de destí no està disponible.</li>
-      <li>Consultar DNS (MX) per decidir a quin servidor enviar el correu.</li>
-    </ul>
+                <h3>Tasca 2: Actualització del Sistema</h3>
+                <p>Realitzar una actualització del sistema per assegurar que tots els paquets estiguin a la última versió.</p>
+                <div class="command">sudo apt update</div>
+                <p>Aquest comandament actualitzarà la llista de paquets disponibles i les seves versions.</p>
 
-    <p><strong>Exemples:</strong> Postfix, Sendmail, Exim, Microsoft Exchange.</p>
-  </section>
+                <h3>Tasca 3: Instal·lació d'Apache2</h3>
+                <p>Instal·lar el servidor web Apache2 i verificar la instal·lació.</p>
+                <div class="command">sudo apt install apache2</div>
+                <div class="command">dpkg -s apache2</div>
+                <p><strong>Verificació:</strong> El paquet ha de mostrar "Status: install ok installed"</p>
 
-  <section>
-    <h2>3. MDA (Mail Delivery Agent)</h2>
-    <p>També un programa en el servidor, encarregat de lliurar el missatge a la bústia de l'usuari final, aplicant filtres o regles si és necessari.</p>
-    
-    <p><strong>Tasques:</strong></p>
-    <ul>
-      <li>Rebre missatges del MTA local.</li>
-      <li>Aplicar regles de filtrat (p. ex., Spam, regles de classificació).</li>
-      <li>Guardar el correu en el format de bústia usada (Maildir, mbox, base de dades).</li>
-    </ul>
+                <h3>Tasca 4: Configuració de la Interfície de Xarxa</h3>
+                <p>Configurar l'adaptador de xarxa enp2s0 amb els següents paràmetres:</p>
+                <div class="network-config">
+                    <dl>
+                        <dt>🌐 Adreça IP:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔢 Màscara de subxarxa:</dt>
+                        <dd>255.255.255.0</dd>
+                        <dt>🚪 Porta d'enllaç:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔍 DNS:</dt>
+                        <dd>8.8.8.8</dd>
+                    </dl>
+                </div>
+                <div class="command">ip a</div>
+                <p>Aquest comandament mostrarà la configuració de totes les interfícies de xarxa.</p>
 
-    <p><strong>Exemples:</strong> Dovecot LDA, Procmail, Maildrop.</p>
-  </section>
+                <h3>Tasca 5: Configuració del Virtual Host</h3>
+                <p>Crear el fitxer de configuració per al domini www.advocatspedralbes.cat</p>
+                <div class="config-example">
+&lt;VirtualHost *:80&gt;
+    ServerName advocatspedralbes.cat
+    ServerAlias www.advocatspedralbes.cat
+    DocumentRoot /var/www/advocatspedralbes
+   
+    &lt;Directory /var/www/advocatspedralbes&gt;
+        DirectoryIndex index.html
+        Options Indexes
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+                </div>
+               
+                <h4>Activació del lloc web:</h4>
+                <div class="command">sudo /usr/sbin/a2ensite advocatspedralbes.cat.conf</div>
+                <div class="command">sudo systemctl reload apache2</div>
 
-  <section>
-    <h2>C) Protocols de correu</h2>
-    <p>SMTP, POP i IMAP són independents de la plataforma i permeten comunicació entre sistemes operatius i clients diferents.</p>
+                <h3>Tasca 6: Verificació del Servei</h3>
+                <p>Comprovar que el servei Apache està actiu i funcionant correctament.</p>
+                <div class="command">sudo systemctl status apache2</div>
+                <p><strong>Estat esperat:</strong> Active (running) en verd</p>
+                <p>Provar des del navegador: <code>http://localhost</code> o <code>http://127.0.0.1</code></p>
 
-    <h3>1. SMTP</h3>
-    <p>Estàndard d'Internet per a l'intercanvi de correu electrònic. Transporta el correu sortint des de l'usuari remitent fins al servidor MTA final.</p>
-    <p><strong>Ports:</strong> 25 (entre MTAs), 587 o 465 (clients autenticats).</p>
-    <p><strong>Flux bàsic de connexió:</strong></p>
-    <ol>
-      <li>L’emissor obre connexió TCP amb el servidor de destí</li>
-      <li>El receptor contesta amb 220 service SMTP</li>
-      <li>L’emissor s’identifica amb HELO</li>
-      <li>El receptor respon amb 250 OK o 421 Service Not Available</li>
-    </ol>
-    <p>Després continuen comandes com: <code>MAIL FROM</code>, <code>RCPT TO</code>, <code>DATA</code>.</p>
+                <h3>Tasca 7: Creació del Directori del Lloc Web</h3>
+                <p>Crear el directori per al lloc web i el fitxer index.html</p>
+                <div class="command">sudo mkdir -p /var/www/advocatspedralbes</div>
+                <div class="command">sudo nano /var/www/advocatspedralbes/index.html</div>
+                <p>El fitxer index.html ha de contenir una pàgina web simple amb informació sobre "Advocats Pedralbes" i el vostre nom.</p>
 
-    <h3>2. POP3</h3>
-    <p>Permet descarregar missatges al client i normalment esborrar-los del servidor. No manté sincronització.</p>
-    <p><strong>Ports:</strong> 110 (sense xifrar), 995 (amb SSL/TLS).</p>
-    <p><strong>Fases:</strong> Connexió → Autenticació → Transacció → Actualització.</p>
+                <h3>Tasca 8: Prova des del Client Windows</h3>
+                <p>Configurar un client Windows amb els següents paràmetres de xarxa:</p>
+                <div class="network-config">
+                    <dl>
+                        <dt>🌐 IP:</dt>
+                        <dd>192.168.200.81</dd>
+                        <dt>🔢 Màscara:</dt>
+                        <dd>255.255.255.0</dd>
+                        <dt>🚪 Porta d'enllaç:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔍 DNS:</dt>
+                        <dd>8.8.8.8</dd>
+                    </dl>
+                </div>
+               
+                <h4>Configuració del fitxer hosts a Windows:</h4>
+                <p>Ruta: <code>C:\Windows\System32\drivers\etc\hosts</code></p>
+                <div class="config-example">192.168.200.1    www.advocatspedralbes.cat</div>
+                <p>Obrir el navegador i accedir a: <strong>www.advocatspedralbes.cat</strong></p>
 
-    <h3>3. IMAP</h3>
-    <p>Permet accedir i gestionar missatges directament al servidor, mantenint sincronització entre dispositius.</p>
-    <p><strong>Característiques principals:</strong></p>
-    <ul>
-      <li>Accés des de qualsevol màquina amb sincronització</li>
-      <li>Manipulació remota de bústies</li>
-      <li>Compatible amb MIME (adjunts)</li>
-      <li>Connexions simultànies des de diversos clients</li>
-    </ul>
-  </section>
+                <h3>Tasca 9: Configuració del Segon Virtual Host</h3>
+                <p>Configurar el domini www.metgespedralbes.cat seguint els mateixos passos que per al primer domini.</p>
+               
+                <div class="task">
+                    <div class="task-title">📋 Passos a seguir:</div>
+                    <ol>
+                        <li>Crear el fitxer de configuració: <code>/etc/apache2/sites-available/metgespedralbes.cat.conf</code></li>
+                        <li>Crear el directori: <code>/var/www/metgespedralbes</code></li>
+                        <li>Crear el fitxer index.html amb contingut personalitzat</li>
+                        <li>Activar el lloc: <code>sudo a2ensite metgespedralbes.cat.conf</code></li>
+                        <li>Reiniciar Apache: <code>sudo systemctl reload apache2</code></li>
+                    </ol>
+                </div>
 
-  <section>
-    <h2>D) Clients de correu</h2>
-    <p>Tipus principals:</p>
-    <ul>
-      <li><strong>Client instal·lat a l’ordinador:</strong> descarrega correu localment (ex. Thunderbird).</li>
-      <li><strong>Client via web:</strong> accés des del navegador (ex. Gmail, Outlook.com).</li>
-      <li><strong>Client en el servidor:</strong> gestionen bústies i enrutament (Postfix, Dovecot, Exchange).</li>
-    </ul>
+                <h4>Prova des del Client Linux:</h4>
+                <p>Configurar un client Linux amb:</p>
+                <div class="network-config">
+                    <dl>
+                        <dt>🌐 IP:</dt>
+                        <dd>192.168.200.90/24</dd>
+                        <dt>🚪 Porta d'enllaç:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔍 DNS:</dt>
+                        <dd>8.8.8.8</dd>
+                    </dl>
+                </div>
+               
+                <p>Editar el fitxer /etc/hosts:</p>
+                <div class="config-example">192.168.200.1    www.metgespedralbes.cat</div>
+            </div>
 
-    <h3>Opcions per configurar un servei de correu a l'empresa</h3>
-    <ol>
-      <li>Utilitzar servei públic (Gmail, Hotmail/Outlook) → tot gestionat pel proveïdor.</li>
-      <li>Client web autogestionat (SquirrelMail, Horde…) apuntant a servidor extern (possible però limitat).</li>
-      <li>Servidor de correu intern (Postfix + Dovecot o Exchange) amb domini propi, registres MX/SPF i tallafocs recomanat.</li>
-    </ol>
-  </section>
+            <div class="document">
+                <h2>🔐 Pràctica 2: Autenticació Bàsica Apache</h2>
+               
+                <div class="warning">
+                    <h4>🎯 Objectiu de la Pràctica</h4>
+                    <p>Implementar autenticació bàsica a Apache utilitzant htpasswd per protegir l'accés als llocs web configurats anteriorment.</p>
+                </div>
 
+                <h3>Tasca 1: Configuració de l'Autenticació per advocatspedralbes.cat</h3>
+                <p>Afegir la configuració d'autenticació al fitxer de Virtual Host:</p>
+                <div class="config-example">
+&lt;Directory /var/www/advocatspedralbes&gt;
+    AuthType Basic
+    AuthName "Control d'accés"
+    AuthUserFile /etc/apache2/usuaris.txt
+    Require valid-user
+&lt;/Directory&gt;
+                </div>
+
+                <h3>Tasca 2: Creació d'Usuaris amb htpasswd</h3>
+                <p>Crear el fitxer d'usuaris i afegir els usuaris autoritzats:</p>
+               
+                <h4>Primer usuari:</h4>
+                <div class="command">htpasswd -c /etc/apache2/usuaris.txt gabrielmormontoy</div>
+                <p>Us demanarà la contrasenya: <strong>smix</strong></p>
+               
+                <h4>Segon usuari:</h4>
+                <div class="command">htpasswd /etc/apache2/usuaris.txt gabrielmormontoy2</div>
+                <p><strong>Important:</strong> No utilitzar el paràmetre -c per al segon usuari, ja que esborrarà el primer!</p>
+               
+                <div class="warning">
+                    <h4>💡 Per què la contrasenya es veu diferent?</h4>
+                    <p>Les contrasenyes es guarden <strong>xifrades (hash)</strong> al fitxer usuaris.txt per seguretat. Això evita que qualsevol persona que accedeixi al fitxer pugui veure les contrasenyes reals.</p>
+                </div>
+
+                <h3>Tasca 3: Verificació del Servei</h3>
+                <div class="command">sudo systemctl status apache2</div>
+                <p>El servei ha d'estar "Active (running)"</p>
+
+                <h3>Tasca 4: Prova des del Client Windows</h3>
+                <p>Accedir a www.advocatspedralbes.cat des d'un navegador. El sistema demanarà:</p>
+                <div class="task">
+                    <div class="task-title">🔑 Credencials d'accés:</div>
+                    <ul>
+                        <li><strong>Nom d'usuari:</strong> gabrielmormontoy</li>
+                        <li><strong>Contrasenya:</strong> smix</li>
+                    </ul>
+                </div>
+
+                <h3>Tasca 5: Configuració de l'Autenticació per metgespedralbes.cat</h3>
+                <p>Repetir el mateix procés per al segon domini:</p>
+                <div class="config-example">
+&lt;Directory /var/www/metgespedralbes&gt;
+    AuthType Basic
+    AuthName "Control d'accés"
+    AuthUserFile /etc/apache2/usuaris.txt
+    Require valid-user
+&lt;/Directory&gt;
+                </div>
+
+                <h3>Tasca 6: Creació d'Usuaris per metgespedralbes.cat</h3>
+                <p>Utilitzar els mateixos usuaris o crear-ne de nous utilitzant htpasswd.</p>
+                <div class="command">htpasswd /etc/apache2/usuaris.txt nomUsuari</div>
+                <div class="command">sudo systemctl reload apache2</div>
+
+                <h3>Tasca 7: Prova des del Client Linux</h3>
+                <p>Configurar el client Linux i editar /etc/hosts:</p>
+                <div class="config-example">
+127.0.0.1       localhost
+127.0.1.1       debian
+192.168.200.1   www.advocatspedralbes.cat
+192.168.200.1   www.metgespedralbes.cat
+                </div>
+                <p>Accedir a www.metgespedralbes.cat i introduir les credencials quan es sol·licitin.</p>
+
+                <div class="warning">
+                    <h4>⚠️ Punts Importants de Seguretat</h4>
+                    <ul>
+                        <li>Les contrasenyes es xifren automàticament amb htpasswd</li>
+                        <li>El fitxer usuaris.txt ha de tenir permisos restrictius</li>
+                        <li>L'autenticació bàsica envia credencials en text pla (usar HTTPS en producció)</li>
+                        <li>Reiniciar Apache després de cada canvi de configuració</li>
+                    </ul>
+                </div>
+
+                <h3>Comandaments Principals Utilitzats</h3>
+                <div class="task">
+                    <div class="task-title">📝 Resum de Comandaments:</div>
+                    <ul>
+                        <li><code>htpasswd -c fitxer usuari</code> - Crear fitxer nou amb primer usuari</li>
+                        <li><code>htpasswd fitxer usuari</code> - Afegir usuari a fitxer existent</li>
+                        <li><code>sudo systemctl reload apache2</code> - Recarregar configuració Apache</li>
+                        <li><code>sudo systemctl status apache2</code> - Verificar estat del servei</li>
+                        <li><code>sudo cat /etc/apache2/usuaris.txt</code> - Veure usuaris creats</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SPANISH CONTENT -->
+        <div id="content-es" class="content-section">
+            <div class="document">
+                <h2>📚 Práctica 1: Configuración del Servidor Web Apache</h2>
+               
+                <div class="warning">
+                    <h4>🎯 Objetivo de la Práctica</h4>
+                    <p>La empresa Abogados Pedralbes S.L. necesita instalar un servidor WEB para albergar diferentes sitios web. Esta práctica cubre la configuración completa de Apache con Virtual Hosts.</p>
+                </div>
+
+                <h3>Tarea 1: Configuración del Hostname</h3>
+                <p>Configurar el hostname de la máquina con tu nombre y primera letra del apellido.</p>
+                <div class="command">sudo hostnamectl set-hostname gabrielm</div>
+                <div class="command">hostname</div>
+                <p><strong>Resultado:</strong> El sistema mostrará el nuevo hostname "gabrielm"</p>
+
+                <h3>Tarea 2: Actualización del Sistema</h3>
+                <p>Realizar una actualización del sistema para asegurar que todos los paquetes estén en la última versión.</p>
+                <div class="command">sudo apt update</div>
+                <p>Este comando actualizará la lista de paquetes disponibles y sus versiones.</p>
+
+                <h3>Tarea 3: Instalación de Apache2</h3>
+                <p>Instalar el servidor web Apache2 y verificar la instalación.</p>
+                <div class="command">sudo apt install apache2</div>
+                <div class="command">dpkg -s apache2</div>
+                <p><strong>Verificación:</strong> El paquete debe mostrar "Status: install ok installed"</p>
+
+                <h3>Tarea 4: Configuración de la Interfaz de Red</h3>
+                <p>Configurar el adaptador de red enp2s0 con los siguientes parámetros:</p>
+                <div class="network-config">
+                    <dl>
+                        <dt>🌐 Dirección IP:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔢 Máscara de subred:</dt>
+                        <dd>255.255.255.0</dd>
+                        <dt>🚪 Puerta de enlace:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔍 DNS:</dt>
+                        <dd>8.8.8.8</dd>
+                    </dl>
+                </div>
+                <div class="command">ip a</div>
+                <p>Este comando mostrará la configuración de todas las interfaces de red.</p>
+
+                <h3>Tarea 5: Configuración del Virtual Host</h3>
+                <p>Crear el archivo de configuración para el dominio www.advocatspedralbes.cat</p>
+                <div class="config-example">
+&lt;VirtualHost *:80&gt;
+    ServerName advocatspedralbes.cat
+    ServerAlias www.advocatspedralbes.cat
+    DocumentRoot /var/www/advocatspedralbes
+   
+    &lt;Directory /var/www/advocatspedralbes&gt;
+        DirectoryIndex index.html
+        Options Indexes
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+                </div>
+               
+                <h4>Activación del sitio web:</h4>
+                <div class="command">sudo /usr/sbin/a2ensite advocatspedralbes.cat.conf</div>
+                <div class="command">sudo systemctl reload apache2</div>
+
+                <h3>Tarea 6: Verificación del Servicio</h3>
+                <p>Comprobar que el servicio Apache está activo y funcionando correctamente.</p>
+                <div class="command">sudo systemctl status apache2</div>
+                <p><strong>Estado esperado:</strong> Active (running) en verde</p>
+                <p>Probar desde el navegador: <code>http://localhost</code> o <code>http://127.0.0.1</code></p>
+
+                <h3>Tarea 7: Creación del Directorio del Sitio Web</h3>
+                <p>Crear el directorio para el sitio web y el archivo index.html</p>
+                <div class="command">sudo mkdir -p /var/www/advocatspedralbes</div>
+                <div class="command">sudo nano /var/www/advocatspedralbes/index.html</div>
+                <p>El archivo index.html debe contener una página web simple con información sobre "Abogados Pedralbes" y tu nombre.</p>
+
+                <h3>Tarea 8: Prueba desde el Cliente Windows</h3>
+                <p>Configurar un cliente Windows con los siguientes parámetros de red:</p>
+                <div class="network-config">
+                    <dl>
+                        <dt>🌐 IP:</dt>
+                        <dd>192.168.200.81</dd>
+                        <dt>🔢 Máscara:</dt>
+                        <dd>255.255.255.0</dd>
+                        <dt>🚪 Puerta de enlace:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔍 DNS:</dt>
+                        <dd>8.8.8.8</dd>
+                    </dl>
+                </div>
+               
+                <h4>Configuración del archivo hosts en Windows:</h4>
+                <p>Ruta: <code>C:\Windows\System32\drivers\etc\hosts</code></p>
+                <div class="config-example">192.168.200.1    www.advocatspedralbes.cat</div>
+                <p>Abrir el navegador y acceder a: <strong>www.advocatspedralbes.cat</strong></p>
+
+                <h3>Tarea 9: Configuración del Segundo Virtual Host</h3>
+                <p>Configurar el dominio www.metgespedralbes.cat siguiendo los mismos pasos que para el primer dominio.</p>
+               
+                <div class="task">
+                    <div class="task-title">📋 Pasos a seguir:</div>
+                    <ol>
+                        <li>Crear el archivo de configuración: <code>/etc/apache2/sites-available/metgespedralbes.cat.conf</code></li>
+                        <li>Crear el directorio: <code>/var/www/metgespedralbes</code></li>
+                        <li>Crear el archivo index.html con contenido personalizado</li>
+                        <li>Activar el sitio: <code>sudo a2ensite metgespedralbes.cat.conf</code></li>
+                        <li>Reiniciar Apache: <code>sudo systemctl reload apache2</code></li>
+                    </ol>
+                </div>
+
+                <h4>Prueba desde el Cliente Linux:</h4>
+                <p>Configurar un cliente Linux con:</p>
+                <div class="network-config">
+                    <dl>
+                        <dt>🌐 IP:</dt>
+                        <dd>192.168.200.90/24</dd>
+                        <dt>🚪 Puerta de enlace:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔍 DNS:</dt>
+                        <dd>8.8.8.8</dd>
+                    </dl>
+                </div>
+               
+                <p>Editar el archivo /etc/hosts:</p>
+                <div class="config-example">192.168.200.1    www.metgespedralbes.cat</div>
+            </div>
+
+            <div class="document">
+                <h2>🔐 Práctica 2: Autenticación Básica Apache</h2>
+               
+                <div class="warning">
+                    <h4>🎯 Objetivo de la Práctica</h4>
+                    <p>Implementar autenticación básica en Apache utilizando htpasswd para proteger el acceso a los sitios web configurados anteriormente.</p>
+                </div>
+
+                <h3>Tarea 1: Configuración de la Autenticación para advocatspedralbes.cat</h3>
+                <p>Añadir la configuración de autenticación al archivo de Virtual Host:</p>
+                <div class="config-example">
+&lt;Directory /var/www/advocatspedralbes&gt;
+    AuthType Basic
+    AuthName "Control de acceso"
+    AuthUserFile /etc/apache2/usuaris.txt
+    Require valid-user
+&lt;/Directory&gt;
+                </div>
+
+                <h3>Tarea 2: Creación de Usuarios con htpasswd</h3>
+                <p>Crear el archivo de usuarios y añadir los usuarios autorizados:</p>
+               
+                <h4>Primer usuario:</h4>
+                <div class="command">htpasswd -c /etc/apache2/usuaris.txt gabrielmormontoy</div>
+                <p>Pedirá la contraseña: <strong>smix</strong></p>
+               
+                <h4>Segundo usuario:</h4>
+                <div class="command">htpasswd /etc/apache2/usuaris.txt gabrielmormontoy2</div>
+                <p><strong>Importante:</strong> ¡No usar el parámetro -c para el segundo usuario, ya que borrará el primero!</p>
+               
+                <div class="warning">
+                    <h4>💡 ¿Por qué la contraseña se ve diferente?</h4>
+                    <p>Las contraseñas se guardan <strong>cifradas (hash)</strong> en el archivo usuaris.txt por seguridad. Esto evita que cualquier persona que acceda al archivo pueda ver las contraseñas reales.</p>
+                </div>
+
+                <h3>Tarea 3: Verificación del Servicio</h3>
+                <div class="command">sudo systemctl status apache2</div>
+                <p>El servicio debe estar "Active (running)"</p>
+
+                <h3>Tarea 4: Prueba desde el Cliente Windows</h3>
+                <p>Acceder a www.advocatspedralbes.cat desde un navegador. El sistema pedirá:</p>
+                <div class="task">
+                    <div class="task-title">🔑 Credenciales de acceso:</div>
+                    <ul>
+                        <li><strong>Nombre de usuario:</strong> gabrielmormontoy</li>
+                        <li><strong>Contraseña:</strong> smix</li>
+                    </ul>
+                </div>
+
+                <h3>Tarea 5: Configuración de la Autenticación para metgespedralbes.cat</h3>
+                <p>Repetir el mismo proceso para el segundo dominio:</p>
+                <div class="config-example">
+&lt;Directory /var/www/metgespedralbes&gt;
+    AuthType Basic
+    AuthName "Control de acceso"
+    AuthUserFile /etc/apache2/usuaris.txt
+    Require valid-user
+&lt;/Directory&gt;
+                </div>
+
+                <h3>Tarea 6: Creación de Usuarios para metgespedralbes.cat</h3>
+                <p>Utilizar los mismos usuarios o crear nuevos utilizando htpasswd.</p>
+                <div class="command">htpasswd /etc/apache2/usuaris.txt nombreUsuario</div>
+                <div class="command">sudo systemctl reload apache2</div>
+
+                <h3>Tarea 7: Prueba desde el Cliente Linux</h3>
+                <p>Configurar el cliente Linux y editar /etc/hosts:</p>
+                <div class="config-example">
+127.0.0.1       localhost
+127.0.1.1       debian
+192.168.200.1   www.advocatspedralbes.cat
+192.168.200.1   www.metgespedralbes.cat
+                </div>
+                <p>Acceder a www.metgespedralbes.cat e introducir las credenciales cuando se soliciten.</p>
+
+                <div class="warning">
+                    <h4>⚠️ Puntos Importantes de Seguridad</h4>
+                    <ul>
+                        <li>Las contraseñas se cifran automáticamente con htpasswd</li>
+                        <li>El archivo usuaris.txt debe tener permisos restrictivos</li>
+                        <li>La autenticación básica envía credenciales en texto plano (usar HTTPS en producción)</li>
+                        <li>Reiniciar Apache después de cada cambio de configuración</li>
+                    </ul>
+                </div>
+
+                <h3>Comandos Principales Utilizados</h3>
+                <div class="task">
+                    <div class="task-title">📝 Resumen de Comandos:</div>
+                    <ul>
+                        <li><code>htpasswd -c archivo usuario</code> - Crear archivo nuevo con primer usuario</li>
+                        <li><code>htpasswd archivo usuario</code> - Añadir usuario a archivo existente</li>
+                        <li><code>sudo systemctl reload apache2</code> - Recargar configuración Apache</li>
+                        <li><code>sudo systemctl status apache2</code> - Verificar estado del servicio</li>
+                        <li><code>sudo cat /etc/apache2/usuaris.txt</code> - Ver usuarios creados</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHINESE CONTENT -->
+        <div id="content-zh" class="content-section">
+            <div class="document">
+                <h2>📚 实践1:Apache网络服务器配置</h2>
+               
+                <div class="warning">
+                    <h4>🎯 实践目标</h4>
+                    <p>Pedralbes律师事务所需要安装一个网络服务器来托管不同的网站。本实践涵盖了使用虚拟主机的Apache完整配置。</p>
+                </div>
+
+                <h3>任务1:配置主机名</h3>
+                <p>使用您的名字和姓氏首字母配置机器的主机名。</p>
+                <div class="command">sudo hostnamectl set-hostname gabrielm</div>
+                <div class="command">hostname</div>
+                <p><strong>结果:</strong> 系统将显示新的主机名 "gabrielm"</p>
+
+                <h3>任务2:系统更新</h3>
+                <p>执行系统更新以确保所有软件包都是最新版本。</p>
+                <div class="command">sudo apt update</div>
+                <p>此命令将更新可用软件包及其版本的列表。</p>
+
+                <h3>任务3:安装Apache2</h3>
+                <p>安装Apache2网络服务器并验证安装。</p>
+                <div class="command">sudo apt install apache2</div>
+                <div class="command">dpkg -s apache2</div>
+                <p><strong>验证:</strong> 软件包应显示 "Status: install ok installed"</p>
+
+                <h3>任务4:网络接口配置</h3>
+                <p>使用以下参数配置网络适配器enp2s0:</p>
+                <div class="network-config">
+                    <dl>
+                        <dt>🌐 IP地址:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔢 子网掩码:</dt>
+                        <dd>255.255.255.0</dd>
+                        <dt>🚪 网关:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔍 DNS:</dt>
+                        <dd>8.8.8.8</dd>
+                    </dl>
+                </div>
+                <div class="command">ip a</div>
+                <p>此命令将显示所有网络接口的配置。</p>
+
+                <h3>任务5:虚拟主机配置</h3>
+                <p>为域名www.advocatspedralbes.cat创建配置文件</p>
+                <div class="config-example">
+&lt;VirtualHost *:80&gt;
+    ServerName advocatspedralbes.cat
+    ServerAlias www.advocatspedralbes.cat
+    DocumentRoot /var/www/advocatspedralbes
+   
+    &lt;Directory /var/www/advocatspedralbes&gt;
+        DirectoryIndex index.html
+        Options Indexes
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+                </div>
+               
+                <h4>激活网站:</h4>
+                <div class="command">sudo /usr/sbin/a2ensite advocatspedralbes.cat.conf</div>
+                <div class="command">sudo systemctl reload apache2</div>
+
+                <h3>任务6:服务验证</h3>
+                <p>检查Apache服务是否处于活动状态并正常运行。</p>
+                <div class="command">sudo systemctl status apache2</div>
+                <p><strong>预期状态:</strong> Active (running) 显示为绿色</p>
+                <p>从浏览器测试: <code>http://localhost</code> 或 <code>http://127.0.0.1</code></p>
+
+                <h3>任务7:创建网站目录</h3>
+                <p>为网站创建目录和index.html文件</p>
+                <div class="command">sudo mkdir -p /var/www/advocatspedralbes</div>
+                <div class="command">sudo nano /var/www/advocatspedralbes/index.html</div>
+                <p>index.html文件应包含关于"Pedralbes律师事务所"和您的名字的简单网页。</p>
+
+                <h3>任务8:从Windows客户端测试</h3>
+                <p>使用以下网络参数配置Windows客户端:</p>
+                <div class="network-config">
+                    <dl>
+                        <dt>🌐 IP:</dt>
+                        <dd>192.168.200.81</dd>
+                        <dt>🔢 掩码:</dt>
+                        <dd>255.255.255.0</dd>
+                        <dt>🚪 网关:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔍 DNS:</dt>
+                        <dd>8.8.8.8</dd>
+                    </dl>
+                </div>
+               
+                <h4>Windows中的hosts文件配置:</h4>
+                <p>路径: <code>C:\Windows\System32\drivers\etc\hosts</code></p>
+                <div class="config-example">192.168.200.1    www.advocatspedralbes.cat</div>
+                <p>打开浏览器并访问: <strong>www.advocatspedralbes.cat</strong></p>
+
+                <h3>任务9:配置第二个虚拟主机</h3>
+                <p>按照与第一个域名相同的步骤配置域名www.metgespedralbes.cat。</p>
+               
+                <div class="task">
+                    <div class="task-title">📋 要遵循的步骤:</div>
+                    <ol>
+                        <li>创建配置文件: <code>/etc/apache2/sites-available/metgespedralbes.cat.conf</code></li>
+                        <li>创建目录: <code>/var/www/metgespedralbes</code></li>
+                        <li>创建带有自定义内容的index.html文件</li>
+                        <li>激活站点: <code>sudo a2ensite metgespedralbes.cat.conf</code></li>
+                        <li>重启Apache: <code>sudo systemctl reload apache2</code></li>
+                    </ol>
+                </div>
+
+                <h4>从Linux客户端测试:</h4>
+                <p>配置Linux客户端:</p>
+                <div class="network-config">
+                    <dl>
+                        <dt>🌐 IP:</dt>
+                        <dd>192.168.200.90/24</dd>
+                        <dt>🚪 网关:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔍 DNS:</dt>
+                        <dd>8.8.8.8</dd>
+                    </dl>
+                </div>
+               
+                <p>编辑/etc/hosts文件:</p>
+                <div class="config-example">192.168.200.1    www.metgespedralbes.cat</div>
+            </div>
+
+            <div class="document">
+                <h2>🔐 实践2:Apache基本身份验证</h2>
+               
+                <div class="warning">
+                    <h4>🎯 实践目标</h4>
+                    <p>使用htpasswd在Apache中实现基本身份验证,以保护对先前配置的网站的访问。</p>
+                </div>
+
+                <h3>任务1:为advocatspedralbes.cat配置身份验证</h3>
+                <p>在虚拟主机文件中添加身份验证配置:</p>
+                <div class="config-example">
+&lt;Directory /var/www/advocatspedralbes&gt;
+    AuthType Basic
+    AuthName "访问控制"
+    AuthUserFile /etc/apache2/usuaris.txt
+    Require valid-user
+&lt;/Directory&gt;
+                </div>
+
+                <h3>任务2:使用htpasswd创建用户</h3>
+                <p>创建用户文件并添加授权用户:</p>
+               
+                <h4>第一个用户:</h4>
+                <div class="command">htpasswd -c /etc/apache2/usuaris.txt gabrielmormontoy</div>
+                <p>将要求输入密码: <strong>smix</strong></p>
+               
+                <h4>第二个用户:</h4>
+                <div class="command">htpasswd /etc/apache2/usuaris.txt gabrielmormontoy2</div>
+                <p><strong>重要:</strong> 不要为第二个用户使用-c参数,因为它会删除第一个用户!</p>
+               
+                <div class="warning">
+                    <h4>💡 为什么密码看起来不同?</h4>
+                    <p>密码在usuaris.txt文件中以<strong>加密(哈希)</strong>形式保存以确保安全。这可以防止访问文件的任何人看到真实密码。</p>
+                </div>
+
+                <h3>任务3:服务验证</h3>
+                <div class="command">sudo systemctl status apache2</div>
+                <p>服务应该是 "Active (running)"</p>
+
+                <h3>任务4:从Windows客户端测试</h3>
+                <p>从浏览器访问www.advocatspedralbes.cat。系统将要求:</p>
+                <div class="task">
+                    <div class="task-title">🔑 访问凭据:</div>
+                    <ul>
+                        <li><strong>用户名:</strong> gabrielmormontoy</li>
+                        <li><strong>密码:</strong> smix</li>
+                    </ul>
+                </div>
+
+                <h3>任务5:为metgespedralbes.cat配置身份验证</h3>
+                <p>对第二个域名重复相同的过程:</p>
+                <div class="config-example">
+&lt;Directory /var/www/metgespedralbes&gt;
+    AuthType Basic
+    AuthName "访问控制"
+    AuthUserFile /etc/apache2/usuaris.txt
+    Require valid-user
+&lt;/Directory&gt;
+                </div>
+
+                <h3>任务6:为metgespedralbes.cat创建用户</h3>
+                <p>使用相同的用户或使用htpasswd创建新用户。</p>
+                <div class="command">htpasswd /etc/apache2/usuaris.txt 用户名</div>
+                <div class="command">sudo systemctl reload apache2</div>
+
+                <h3>任务7:从Linux客户端测试</h3>
+                <p>配置Linux客户端并编辑/etc/hosts:</p>
+                <div class="config-example">
+127.0.0.1       localhost
+127.0.1.1       debian
+192.168.200.1   www.advocatspedralbes.cat
+192.168.200.1   www.metgespedralbes.cat
+                </div>
+                <p>访问www.metgespedralbes.cat并在请求时输入凭据。</p>
+
+                <div class="warning">
+                    <h4>⚠️ 重要安全要点</h4>
+                    <ul>
+                        <li>密码会自动使用htpasswd加密</li>
+                        <li>usuaris.txt文件必须有限制性权限</li>
+                        <li>基本身份验证以明文形式发送凭据(生产环境使用HTTPS)</li>
+                        <li>每次配置更改后重启Apache</li>
+                    </ul>
+                </div>
+
+                <h3>主要使用的命令</h3>
+                <div class="task">
+                    <div class="task-title">📝 命令摘要:</div>
+                    <ul>
+                        <li><code>htpasswd -c 文件 用户</code> - 创建新文件并添加第一个用户</li>
+                        <li><code>htpasswd 文件 用户</code> - 向现有文件添加用户</li>
+                        <li><code>sudo systemctl reload apache2</code> - 重新加载Apache配置</li>
+                        <li><code>sudo systemctl status apache2</code> - 验证服务状态</li>
+                        <li><code>sudo cat /etc/apache2/usuaris.txt</code> - 查看创建的用户</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- TURKISH CONTENT -->
+        <div id="content-tr" class="content-section">
+            <div class="document">
+                <h2>📚 Uygulama 1: Apache Web Sunucusu Yapılandırması</h2>
+               
+                <div class="warning">
+                    <h4>🎯 Uygulamanın Amacı</h4>
+                    <p>Pedralbes Avukatları şirketi farklı web sitelerini barındırmak için bir WEB sunucusu kurmaya ihtiyaç duyuyor. Bu uygulama, Sanal Hostlar ile Apache'nin tam yapılandırmasını kapsar.</p>
+                </div>
+
+                <h3>Görev 1: Hostname Yapılandırması</h3>
+                <p>Makinenin hostname'ini adınız ve soyadınızın ilk harfi ile yapılandırın.</p>
+                <div class="command">sudo hostnamectl set-hostname gabrielm</div>
+                <div class="command">hostname</div>
+                <p><strong>Sonuç:</strong> Sistem yeni hostname "gabrielm" gösterecektir</p>
+
+                <h3>Görev 2: Sistem Güncellemesi</h3>
+                <p>Tüm paketlerin en son sürümde olduğundan emin olmak için sistem güncellemesi yapın.</p>
+                <div class="command">sudo apt update</div>
+                <p>Bu komut mevcut paketlerin ve sürümlerinin listesini güncelleyecektir.</p>
+
+                <h3>Görev 3: Apache2 Kurulumu</h3>
+                <p>Apache2 web sunucusunu kurun ve kurulumu doğrulayın.</p>
+                <div class="command">sudo apt install apache2</div>
+                <div class="command">dpkg -s apache2</div>
+                <p><strong>Doğrulama:</strong> Paket "Status: install ok installed" göstermelidir</p>
+
+                <h3>Görev 4: Ağ Arayüzü Yapılandırması</h3>
+                <p>Ağ adaptörü enp2s0'ı aşağıdaki parametrelerle yapılandırın:</p>
+                <div class="network-config">
+                    <dl>
+                        <dt>🌐 IP Adresi:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔢 Alt Ağ Maskesi:</dt>
+                        <dd>255.255.255.0</dd>
+                        <dt>🚪 Ağ Geçidi:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔍 DNS:</dt>
+                        <dd>8.8.8.8</dd>
+                    </dl>
+                </div>
+                <div class="command">ip a</div>
+                <p>Bu komut tüm ağ arayüzlerinin yapılandırmasını gösterecektir.</p>
+
+                <h3>Görev 5: Sanal Host Yapılandırması</h3>
+                <p>www.advocatspedralbes.cat domain'i için yapılandırma dosyası oluşturun</p>
+                <div class="config-example">
+&lt;VirtualHost *:80&gt;
+    ServerName advocatspedralbes.cat
+    ServerAlias www.advocatspedralbes.cat
+    DocumentRoot /var/www/advocatspedralbes
+   
+    &lt;Directory /var/www/advocatspedralbes&gt;
+        DirectoryIndex index.html
+        Options Indexes
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+                </div>
+               
+                <h4>Web sitesini etkinleştirin:</h4>
+                <div class="command">sudo /usr/sbin/a2ensite advocatspedralbes.cat.conf</div>
+                <div class="command">sudo systemctl reload apache2</div>
+
+                <h3>Görev 6: Servis Doğrulama</h3>
+                <p>Apache servisinin aktif olduğunu ve düzgün çalıştığını kontrol edin.</p>
+                <div class="command">sudo systemctl status apache2</div>
+                <p><strong>Beklenen durum:</strong> Active (running) yeşil renkte</p>
+                <p>Tarayıcıdan test edin: <code>http://localhost</code> veya <code>http://127.0.0.1</code></p>
+
+                <h3>Görev 7: Web Sitesi Dizini Oluşturma</h3>
+                <p>Web sitesi için dizin ve index.html dosyası oluşturun</p>
+                <div class="command">sudo mkdir -p /var/www/advocatspedralbes</div>
+                <div class="command">sudo nano /var/www/advocatspedralbes/index.html</div>
+                <p>index.html dosyası "Pedralbes Avukatları" hakkında bilgi ve adınızı içeren basit bir web sayfası içermelidir.</p>
+
+                <h3>Görev 8: Windows İstemcisinden Test</h3>
+                <p>Aşağıdaki ağ parametreleriyle bir Windows istemcisi yapılandırın:</p>
+                <div class="network-config">
+                    <dl>
+                        <dt>🌐 IP:</dt>
+                        <dd>192.168.200.81</dd>
+                        <dt>🔢 Maske:</dt>
+                        <dd>255.255.255.0</dd>
+                        <dt>🚪 Ağ Geçidi:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔍 DNS:</dt>
+                        <dd>8.8.8.8</dd>
+                    </dl>
+                </div>
+               
+                <h4>Windows'ta hosts dosyası yapılandırması:</h4>
+                <p>Yol: <code>C:\Windows\System32\drivers\etc\hosts</code></p>
+                <div class="config-example">192.168.200.1    www.advocatspedralbes.cat</div>
+                <p>Tarayıcıyı açın ve şuraya erişin: <strong>www.advocatspedralbes.cat</strong></p>
+
+                <h3>Görev 9: İkinci Sanal Host Yapılandırması</h3>
+                <p>İlk domain için aynı adımları izleyerek www.metgespedralbes.cat domain'ini yapılandırın.</p>
+               
+                <div class="task">
+                    <div class="task-title">📋 Takip edilecek adımlar:</div>
+                    <ol>
+                        <li>Yapılandırma dosyası oluşturun: <code>/etc/apache2/sites-available/metgespedralbes.cat.conf</code></li>
+                        <li>Dizin oluşturun: <code>/var/www/metgespedralbes</code></li>
+                        <li>Özel içerikli index.html dosyası oluşturun</li>
+                        <li>Siteyi etkinleştirin: <code>sudo a2ensite metgespedralbes.cat.conf</code></li>
+                        <li>Apache'yi yeniden başlatın: <code>sudo systemctl reload apache2</code></li>
+                    </ol>
+                </div>
+
+                <h4>Linux İstemcisinden Test:</h4>
+                <p>Bir Linux istemcisini şu şekilde yapılandırın:</p>
+                <div class="network-config">
+                    <dl>
+                        <dt>🌐 IP:</dt>
+                        <dd>192.168.200.90/24</dd>
+                        <dt>🚪 Ağ Geçidi:</dt>
+                        <dd>192.168.200.1</dd>
+                        <dt>🔍 DNS:</dt>
+                        <dd>8.8.8.8</dd>
+                    </dl>
+                </div>
+               
+                <p>/etc/hosts dosyasını düzenleyin:</p>
+                <div class="config-example">192.168.200.1    www.metgespedralbes.cat</div>
+            </div>
+
+            <div class="document">
+                <h2>🔐 Uygulama 2: Apache Temel Kimlik Doğrulama</h2>
+               
+                <div class="warning">
+                    <h4>🎯 Uygulamanın Amacı</h4>
+                    <p>Daha önce yapılandırılmış web sitelerine erişimi korumak için htpasswd kullanarak Apache'de temel kimlik doğrulamayı uygulamak.</p>
+                </div>
+
+                <h3>Görev 1: advocatspedralbes.cat için Kimlik Doğrulama Yapılandırması</h3>
+                <p>Sanal Host dosyasına kimlik doğrulama yapılandırması ekleyin:</p>
+                <div class="config-example">
+&lt;Directory /var/www/advocatspedralbes&gt;
+    AuthType Basic
+    AuthName "Erişim Kontrolü"
+    AuthUserFile /etc/apache2/usuaris.txt
+    Require valid-user
+&lt;/Directory&gt;
+                </div>
+
+                <h3>Görev 2: htpasswd ile Kullanıcı Oluşturma</h3>
+                <p>Kullanıcı dosyası oluşturun ve yetkili kullanıcılar ekleyin:</p>
+               
+                <h4>İlk kullanıcı:</h4>
+                <div class="command">htpasswd -c /etc/apache2/usuaris.txt gabrielmormontoy</div>
+                <p>Şifre isteyecek: <strong>smix</strong></p>
+               
+                <h4>İkinci kullanıcı:</h4>
+                <div class="command">htpasswd /etc/apache2/usuaris.txt gabrielmormontoy2</div>
+                <p><strong>Önemli:</strong> İkinci kullanıcı için -c parametresini kullanmayın, çünkü birincisini silecektir!</p>
+               
+                <div class="warning">
+                    <h4>💡 Şifre neden farklı görünüyor?</h4>
+                    <p>Şifreler güvenlik için usuaris.txt dosyasında <strong>şifrelenmiş (hash)</strong> olarak saklanır. Bu, dosyaya erişen herhangi birinin gerçek şifreleri görmesini engeller.</p>
+                </div>
+
+                <h3>Görev 3: Servis Doğrulama</h3>
+                <div class="command">sudo systemctl status apache2</div>
+                <p>Servis "Active (running)" olmalıdır</p>
+
+                <h3>Görev 4: Windows İstemcisinden Test</h3>
+                <p>Bir tarayıcıdan www.advocatspedralbes.cat'a erişin. Sistem şunları isteyecektir:</p>
+                <div class="task">
+                    <div class="task-title">🔑 Erişim kimlik bilgileri:</div>
+                    <ul>
+                        <li><strong>Kullanıcı adı:</strong> gabrielmormontoy</li>
+                        <li><strong>Şifre:</strong> smix</li>
+                    </ul>
+                </div>
+
+                <h3>Görev 5: metgespedralbes.cat için Kimlik Doğrulama Yapılandırması</h3>
+                <p>İkinci domain için aynı işlemi tekrarlayın:</p>
+                <div class="config-example">
+&lt;Directory /var/www/metgespedralbes&gt;
+    AuthType Basic
+    AuthName "Erişim Kontrolü"
+    AuthUserFile /etc/apache2/usuaris.txt
+    Require valid-user
+&lt;/Directory&gt;
+                </div>
+
+                <h3>Görev 6: metgespedralbes.cat için Kullanıcı Oluşturma</h3>
+                <p>Aynı kullanıcıları kullanın veya htpasswd kullanarak yenilerini oluşturun.</p>
+                <div class="command">htpasswd /etc/apache2/usuaris.txt kullaniciAdi</div>
+                <div class="command">sudo systemctl reload apache2</div>
+
+                <h3>Görev 7: Linux İstemcisinden Test</h3>
+                <p>Linux istemcisini yapılandırın ve /etc/hosts'u düzenleyin:</p>
+                <div class="config-example">
+127.0.0.1       localhost
+127.0.1.1       debian
+192.168.200.1   www.advocatspedralbes.cat
+192.168.200.1   www.metgespedralbes.cat
+                </div>
+                <p>www.metgespedralbes.cat'a erişin ve istendiğinde kimlik bilgilerini girin.</p>
+
+                <div class="warning">
+                    <h4>⚠️ Önemli Güvenlik Noktaları</h4>
+                    <ul>
+                        <li>Şifreler htpasswd ile otomatik olarak şifrelenir</li>
+                        <li>usuaris.txt dosyası kısıtlayıcı izinlere sahip olmalıdır</li>
+                        <li>Temel kimlik doğrulama kimlik bilgilerini düz metin olarak gönderir (üretimde HTTPS kullanın)</li>
+                        <li>Her yapılandırma değişikliğinden sonra Apache'yi yeniden başlatın</li>
+                    </ul>
+                </div>
+
+                <h3>Kullanılan Ana Komutlar</h3>
+                <div class="task">
+                    <div class="task-title">📝 Komut Özeti:</div>
+                    <ul>
+                        <li><code>htpasswd -c dosya kullanici</code> - İlk kullanıcı ile yeni dosya oluştur</li>
+                        <li><code>htpasswd dosya kullanici</code> - Mevcut dosyaya kullanıcı ekle</li>
+                        <li><code>sudo systemctl reload apache2</code> - Apache yapılandırmasını yeniden yükle</li>
+                        <li><code>sudo systemctl status apache2</code> - Servis durumunu doğrula</li>
+                        <li><code>sudo cat /etc/apache2/usuaris.txt</code> - Oluşturulan kullanıcıları gör</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="swamp-emoji">🐸 🌿 🧅 🐊</div>
+        <p><strong>Institut Pedralbes</strong> - Consorci d'Educació de Barcelona</p>
+        <p>CFGM Sistemes microinformàtics i xarxes - Serveis de xarxa</p>
+        <p>RA5 - Configuració i Autenticació Web (Apache2)</p>
+        <p style="margin-top: 1rem; color: var(--shrek-green);">
+            📚 Pràctiques realitzades per Gabriel Mormontoy - Curs 2025-26
+        </p>
+        <p style="margin-top: 1.5rem; font-size: 0.85rem; font-style: italic;">
+            🧅 "Això és el meu aiguamoll!" - Shrek 🧅
+        </p>
+    </footer>
+
+    <script>
+        function switchLanguage(lang) {
+            // Hide all content sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+           
+            // Show selected language content
+            document.getElementById('content-' + lang).classList.add('active');
+           
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+           
+            // Smooth scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
 </body>
 </html>
